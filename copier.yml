@@ -7,7 +7,7 @@ _templates_suffix: ""
 project_name:
   type: str
   help: "Name of your project? (e.g., clegmed-app)"
-  placeholder: "clegmed-app"
+  default: "clegmed-app"
   validate: "^[a-zA-Z0-9_-]+$"
 
 author_name:
