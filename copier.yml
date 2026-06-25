@@ -2,17 +2,17 @@
 _min_copier_version: "9.0"
 
 project_name:
-  type: string
+  type: str
   help: "Name of your project? (e.g., clegmed-app)"
   placeholder: "clegmed-app"
   validate: "^[a-zA-Z0-9_-]+$"
 
 author_name:
-  type: string
+  type: str
   help: "Name of the developer/ogranization?"
   default: "Unknown"
 
 docker_registry:
-  type: string
+  type: str
   help: "Name of the docker registry?"
   default: "ghcr.io"
