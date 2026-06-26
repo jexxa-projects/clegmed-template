@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(FetchContent)
 FetchContent_Declare(
         clegmed
-        URL https://github.com/jexxa-projects/CLegMed/archive/refs/tags/v0.1.0.tar.gz
+        URL https://github.com/jexxa-projects/CLegMed/archive/refs/tags/v0.1.1.tar.gz
 )
 FetchContent_MakeAvailable(clegmed)
 
