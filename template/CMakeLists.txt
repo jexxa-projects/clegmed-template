@@ -12,10 +12,35 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(clegmed)
 
 # Anwendung definieren
-add_executable({{ project_name }} main.cpp)
+add_executable({{ project_name }} src/main.cpp)
 target_link_libraries({{ project_name }} PRIVATE clegmed::core)
 
 # Voll-statisches Linken für das schlanke Docker Scratch-Image
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_link_options({{ project_name }} PRIVATE -static)
 endif()
+
+
+# GoogleTest via FetchContent einbinden (wird oft im Hauptprojekt oder im Template geregelt)
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        URL https://github.com
+)
+FetchContent_MakeAvailable(googletest)
+
+# Test-Executable erstellen
+add_executable(clegmed_template_tests tests/main_test.cpp)
+
+# Verlinke gegen GoogleTest und deine CLegMed-Targets
+target_link_libraries(clegmed_template_tests
+        PRIVATE
+        gtest_main
+        clegmed::core::base
+        clegmed::plugins
+        clegmed::utils
+)
+
+# Registriere die Tests für CTest
+include(CTest)
+add_test(NAME TemplateUnitTests COMMAND clegmed_template_tests)
