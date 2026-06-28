@@ -20,19 +20,23 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang
     target_link_options({{ project_name }} PRIVATE -static)
 endif()
 
+## Testing
+enable_testing()
 
-# GoogleTest via FetchContent einbinden (wird oft im Hauptprojekt oder im Template geregelt)
+# Include GoogleTest via FetchContent
 include(FetchContent)
 FetchContent_Declare(
         googletest
-        URL https://github.com
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG        v1.17.0 # Secure, reproducible release tag for production
 )
 FetchContent_MakeAvailable(googletest)
+include(GoogleTest)
 
-# Test-Executable erstellen
+
+# Create Test-Executable
 add_executable(clegmed_template_tests tests/main_test.cpp)
-
-# Verlinke gegen GoogleTest und deine CLegMed-Targets
+gtest_discover_tests(clegmed_template_tests)
 target_link_libraries(clegmed_template_tests
         PRIVATE
         gtest_main
@@ -40,7 +44,3 @@ target_link_libraries(clegmed_template_tests
         clegmed::plugins
         clegmed::utils
 )
-
-# Registriere die Tests für CTest
-include(CTest)
-add_test(NAME TemplateUnitTests COMMAND clegmed_template_tests)
