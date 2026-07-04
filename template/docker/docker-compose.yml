@@ -1,0 +1,10 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+  # Dynamischer Service-Name basierend auf dem Projektnamen
+    {{ project_name }}:
+    # Zusammengesetzter Image-Pfad aus Registry, Autor und Projektname
+    image: {{ docker_registry }}/{{ author_name | lower }}/{{ project_name | lower }}:latest
+    # Optional: Container-Name festlegen
+    container_name: {{ project_name }}
