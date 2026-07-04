@@ -26,7 +26,7 @@ jobs:
       - name: Setup CMake 4
         uses: jwlawson/actions-setup-cmake@v2
         with:
-          cmake-version: '3.x' # Hinweis: CMake 4 ist aktuell noch nicht im stabilen Release-Zyklus der meisten Actions
+          cmake-version: '4.x'
 
       # 4. Build-Verzeichnis vorbereiten
       {% raw %}
