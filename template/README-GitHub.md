@@ -56,10 +56,6 @@ We provide the following GitHub actions that are either started manually or auto
     *   __Description:__ Automatic merge of dependency updates with a new patch or minor versions of dependencies from Dependabot. See https://github.com/ridedott/merge-me-action for more information.
     *   __Started:__ Automatically only
 
-*   [dependabot.yml]({{ vcs_repository }}/actions/workflows/dependabot.yml):
-    *   __Description:__ Check for new dependencies and create a pull request
-    *   __Started:__ Automatically only (each day)
-
 ## Deployment
 
 In this section we assume a docker-swarm setup, which is a typical starting point for clustering your container.
@@ -67,15 +63,12 @@ In addition, it can be easily run and maintained on your developing machine.
 
 ### Docker-Stacks
 
-*   [developerStack.yml](deploy/developerStack.yml)
-    *   Includes all required dependencies to run the application during development on your local machine
-
-*   [docker-compose.yml](deploy/docker-compose.yml)
+*   [docker-compose.yml](docker/docker-compose.yml)
     *   Stack to run the application as stack in your production environment
 
 ### Deploy Stack
 
 To deploy the stack, you can use the following command from your checkout directory.
 ```shell
-docker stack deploy --compose-file ./deploy/docker-compose.yml {{ artifact_id.lower() }}
+docker stack deploy --compose-file ./docker/docker-compose.yml {{ project_name | lower }} 
 ```
