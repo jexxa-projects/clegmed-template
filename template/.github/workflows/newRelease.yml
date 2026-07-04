@@ -2,7 +2,7 @@ name: Multi-Arch Build
 
 on:
   push:
-    tags: [ "v*.*.*" ]  # Starts build on tag push
+    tags: [ "v*.*.*" ]
   workflow_dispatch:
 
 jobs:
@@ -18,17 +18,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Generates tags automatically
+      # Docker Metadaten mit Copier-Variablen für das Image
       - name: Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}
+          # Hier setzen wir deine Copier-Variablen ein:
+          images: {{ docker_registry }}/{{ author_name | lower }}/{{ project_name | lower }}
+          {% raw %}
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=raw,value=latest,enable={{is_default_branch}}
+          {% endraw %}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -39,22 +42,23 @@ jobs:
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: {{ docker_registry }}
+          # Schutz der GitHub-Variablen via String-Escaping
+          username: {{ '${{ github.actor }}' }}
+          password: {{ '${{ secrets.GITHUB_TOKEN }}' }}
 
       - name: Build and Push
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./docker/Dockerfile
+          # Pfad zum Dockerfile im Template prüfen (oft root oder ./Dockerfile)
+          file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          # Hier werden die Image-Tags (latest, 1.0.0 etc.) gesetzt
+          {% raw %}
           tags: ${{ steps.meta.outputs.tags }}
-          # Hier wird die Versionsnummer INS Dockerfile gereicht
           build-args: |
             APP_VERSION=${{ steps.meta.outputs.version }}
+          {% endraw %}
           provenance: false
           sbom: false
-

@@ -1,4 +1,4 @@
-name: CMake 4 Linux CI (C++23)
+name: CMake
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
     steps:
       # 1. Quellcode auschecken
       - name: Checkout Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       # 2. Abhängigkeiten (Doxygen) installieren
       - name: Install System Dependencies
@@ -24,17 +24,18 @@ jobs:
 
       # 3. Garantiert CMake 4 installieren
       - name: Setup CMake 4
-        uses: jwlawson/actions-setup-cmake@0d6a7d60b009d01c9e7523be22153ff8f19460d3
+        uses: jwlawson/actions-setup-cmake@v2
         with:
-          cmake-version: '4.x'
+          cmake-version: '3.x' # Hinweis: CMake 4 ist aktuell noch nicht im stabilen Release-Zyklus der meisten Actions
 
       # 4. Build-Verzeichnis vorbereiten
+      {% raw %}
       - name: Set Build Directory
         id: strings
         shell: bash
         run: echo "build-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-      # 5. CMake konfigurieren (GCC 14 wird explizit als C++23 Compiler gesetzt)
+      # 5. CMake konfigurieren
       - name: Configure CMake
         run: >
           cmake -B ${{ steps.strings.outputs.build-dir }}
@@ -53,3 +54,4 @@ jobs:
       - name: Run Tests
         working-directory: ${{ steps.strings.outputs.build-dir }}
         run: ctest --build-config Release
+      {% endraw %}

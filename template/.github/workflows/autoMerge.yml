@@ -5,7 +5,7 @@ on:
     types:
       - completed
     workflows:
-      - 'Maven Test Build'
+      - 'CMake'
 
 jobs:
   merge-me:
@@ -15,8 +15,9 @@ jobs:
 
     steps:
       - name: Merge me!
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        # Maskierung der GitHub-Variablen für Copier
+        if: {{ '${{ github.event.workflow_run.conclusion == "success" }}' }}
         uses: ridedott/merge-me-action@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.MERGE_ME_SECRET }}
+          GITHUB_TOKEN: {{ '${{ secrets.MERGE_ME_SECRET }}' }}
           PRESET: DEPENDABOT_MINOR
