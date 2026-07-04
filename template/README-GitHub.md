@@ -45,12 +45,13 @@ We provide the following GitHub actions that are either started manually or auto
     *   __Description:__ Automatically maintains a file containing noteworthy changes made since the last release. Noteworthiness is determined through the use of [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
     *   __Started:__ Automatically only
 
-*   [newRelease.yml]({{ vcs_repository }}/actions/workflows/newRelease.yml):
-    *   __Description:__ Create a new release using maven via GitHub web page
-    *   __Started:__ Manually only
-    *   Please note that the first run might fail because the link to the ghcr.io repository is automatically created the first time you try to access it. So, please run this action twice, as soon as you created the repo.
-    *   Also adds unreleased changes to the changelog.
-
+  *   [newRelease.yml]({{ vcs_repository }}/actions/workflows/newRelease.yml):
+      *   __Description:__ Create a new release using maven via GitHub web page
+      *   __Started:__ Via git tag push 
+      ```shell
+      git tag -a v1.0.0 -m "Release version 1.0.0"
+      git push origin v1.0.0
+      ```
 
 *   [autoMerge.yml]({{ vcs_repository }}/actions/workflows/autoMerge.yml):
     *   __Description:__ Automatic merge of dependency updates with a new patch or minor versions of dependencies from Dependabot. See https://github.com/ridedott/merge-me-action for more information.
