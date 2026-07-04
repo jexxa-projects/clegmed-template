@@ -14,7 +14,7 @@ TEST(CLegMedTemplateTestSuite, BasicPipelineFlow) {
         .every(10ms)
         .from(emit("TestMessage"))
         .then(passThrough())
-        .consumeWith(clegmed::plugins::generic::store(received_data)); // Fängt die Daten im Test ab
+        .consumeWith(store(received_data));
 
     flowgraph.start();
 

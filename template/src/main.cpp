@@ -1,15 +1,16 @@
 #include "clegmed/plugins/shortcuts.hpp"
 
-int main() {
+int main(int argc, char** argv) {
     using namespace clegmed::shortcuts;
 
-    auto flowgraph = FlowGraph{}
-        .every(2s)
-        .from(emit("Hello World"))
-        .then(passThrough())
-        .consumeWith(logInfo());
+    auto clegmed = CLegMed(argc, argv,
+        FlowGraph{}
+            .every(2s)
+            .from(emit("Hello "))
+            .then(append("World"))
+            .consumeWith(logInfo())
+    );
 
-    auto clegmed = CLegMed(std::move(flowgraph));
     clegmed.run();
 }
 
