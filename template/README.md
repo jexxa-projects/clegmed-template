@@ -1,4 +1,4 @@
-[![Maven Test Build]({{ vcs_repository }}/actions/workflows/cmakeBuild.yml/badge.svg)]({{ vcs_repository }}/actions/workflows/mavenBuild.yml)
+[![Maven Test Build]({{ vcs_repository }}/actions/workflows/cmakeBuild.yml/badge.svg)]({{ vcs_repository }}/actions/workflows/cmakeBuild.yml)
 [![New Release]({{ vcs_repository }}/actions/workflows/newRelease.yml/badge.svg)]({{ vcs_repository }}/actions/workflows/newRelease.yml)
 
 # {{ projectName }}
