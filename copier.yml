@@ -19,7 +19,7 @@ vcs_repository:
   type: str
   help: "URL of the repository?"
   # Generiert automatisch: https://github.com
-  default: "https://github.com{{ author_name }}/{{ project_name }}"
+  default: "https://github.com/{{ author_name }}/{{ project_name }}"
 
 docker_registry:
   type: str
