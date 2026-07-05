@@ -9,8 +9,9 @@ and dependency management.
 
 - **Instant Setup**: Generates a fully configured out-of-source CMake build environment.
 - **Dependency Automation**: Automatically integrates `CLegMed` and `GoogleTest` via CMake's `FetchContent`.
-- **Regulatory Foundation**: Includes a pre-configured `REQUIREMENTS.md` template and standard-compliant Git hooks layout to match CLegMed's quality gates.
 - **Modern Standards**: Pre-configured for C++23, standard warning levels, and automated test runners via CTest.
+- **Template for Tests**: Includes a template for Unit-, and Integration test.
+- **CI/CD Pipeline**: Predefined CI/CD pipeline for GitHub including building a docker image.
 
 ## 📋 Prerequisites
 
@@ -42,8 +43,9 @@ copier copy gh:jexxa-projects/clegmed-template my-new-clegmed-app
 
 Copier will interactively ask you a few questions to customize your application structure:
 - **Project Name**: The binary target name (e.g., `my-clegmed-service`).
-- **Author Name / Organization**: Used for file headers and license attribution.
-- **CLegMed Version**: The specific tag or branch of CLegMed you want to pin (e.g., `v0.1.0` or `main`).
+- **Author Name / Organization**: Used as default for the `vcs_repository` variable.
+- **VCS Repository**: URL of the repository. The default value is ```https://github.com/<author_name>/<project_name>```. 
+- **Docker Registry**: URL of the Docker registry. The default value is the GitHub container registry ```ghcr.io.io/<author_name>```. 
 
 ### 3. Build and Run the Generated App
 
