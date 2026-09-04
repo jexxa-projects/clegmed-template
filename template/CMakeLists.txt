@@ -15,9 +15,9 @@ FetchContent_MakeAvailable(clegmed)
 add_executable({{ project_name }} src/main.cpp)
 target_link_libraries({{ project_name }} PRIVATE clegmed::core)
 
-# Voll-statisches Linken für das schlanke Docker Scratch-Image
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_link_options({{ project_name }} PRIVATE -static)
+# Voll-statisches Linken für das schlanke Docker Scratch-Image (nur unter Linux)
+if((CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang") AND NOT APPLE)
+    target_link_options(clegmed-app PRIVATE -static)
 endif()
 
 ## Testing
